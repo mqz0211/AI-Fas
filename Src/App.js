@@ -6,6 +6,7 @@ const App = () => {
   const heroTextRef = useRef(null);
   const heroImageRef = useRef(null);
   const sectionRefs = useRef([]);
+  // Clear and re-initialize sectionRefs.current to avoid stale references on re-renders
   sectionRefs.current = [];
 
   // Ref specifically for the process steps container
@@ -16,14 +17,39 @@ const App = () => {
   const [stylingAdvice, setStylingAdvice] = useState('');
   const [isStylingLoading, setIsStylingLoading] = useState(false);
 
-  // Pre-generated AI fashion image URLs (using more visually representative placeholders)
-  const aiFashionImages = [
-    "https://placehold.co/400x500/87CEEB/FFFFFF?text=Futuristic+Gown", // A futuristic iridescent gown on a runway, digital art style
-    "https://placehold.co/400x500/98FB98/FFFFFF?text=Streetwear", // Minimalist urban streetwear, muted tones, city background
-    "https://placehold.co/400x500/FFDAB9/FFFFFF?text=Bohemian+Dress", // Bohemian-inspired dress with intricate floral patterns, natural lighting
-    "https://placehold.co/400x500/DDA0DD/FFFFFF?text=Avant-Garde+Suit", // Avant-garde suit with geometric cutouts, abstract background
-    "https://placehold.co/400x500/ADD8E6/FFFFFF?text=Evening+Wear", // Elegant evening wear with flowing silk fabric, soft focus
-    "https://placehold.co/400x500/F08080/FFFFFF?text=Athleisure+Outfit" // Sporty athleisure outfit with dynamic lines, vibrant colors
+  // Pre-generated AI fashion image URLs and their specific descriptions
+  const aiFashionCollections = [
+    {
+      // Updated image URL for Collection 1 to resemble the "ice queen ball gown"
+      imageUrl: "https://placehold.co/400x500/ADD8E6/FFFFFF?text=Ice+Queen+Gown", // A light blue/iridescent placeholder
+      title: "Collection 1: Futuristic Gown",
+      description: "A breathtaking futuristic gown, crafted from iridescent, bio-luminescent fabric that shimmers with every movement. It evokes an ethereal, otherworldly elegance, perfect for a grand celestial event."
+    },
+    {
+      imageUrl: "https://placehold.co/400x500/98FB98/FFFFFF?text=Streetwear",
+      title: "Collection 2: Streetwear",
+      description: "A minimalist urban streetwear ensemble, featuring oversized silhouettes, utilitarian pockets, and a muted color palette of charcoal and concrete. It embodies effortless cool and practical sophistication for the modern city dweller."
+    },
+    {
+      imageUrl: "https://placehold.co/400x500/FFDAB9/FFFFFF?text=Bohemian+Dress",
+      title: "Collection 3: Bohemian Dress",
+      description: "A flowing, bohemian-inspired dress adorned with intricate floral patterns and delicate lace inserts. Made from sustainable, breathable linen, it captures a free-spirited, romantic vibe ideal for sun-drenched festivals or garden parties."
+    },
+    {
+      imageUrl: "https://placehold.co/400x500/DDA0DD/FFFFFF?text=Avant-Garde+Suit",
+      title: "Collection 4: Avant-Garde Suit",
+      description: "An avant-garde suit that challenges traditional tailoring with sharp, geometric cutouts and unexpected layering. Constructed from a structured, matte black material, it creates a bold, architectural statement for high-fashion events."
+    },
+    {
+      imageUrl: "https://placehold.co/400x500/ADD8E6/FFFFFF?text=Evening+Wear",
+      title: "Collection 5: Evening Wear",
+      description: "An elegant evening wear piece, featuring a cascading silhouette of flowing silk chiffon in a deep sapphire hue. Its graceful drape and subtle shimmer evoke timeless glamour and refined luxury."
+    },
+    {
+      imageUrl: "https://placehold.co/400x500/F08080/FFFFFF?text=Athleisure+Outfit",
+      title: "Collection 6: Athleisure Outfit",
+      description: "A dynamic athleisure outfit designed for both performance and style, incorporating breathable mesh panels and reflective accents. Its vibrant color blocking and ergonomic design convey energy and modern versatility."
+    }
   ];
 
   // State for mobile menu
@@ -128,7 +154,7 @@ const App = () => {
           // All GSAP scripts are loaded, now register plugins
           if (window.gsap && window.ScrollTrigger && window.ScrollToPlugin) {
             window.gsap.registerPlugin(window.ScrollTrigger, window.ScrollToPlugin);
-            setIsGsapLoaded(true); // Set state to true once GSAP is confirmed loaded and plugins registered
+            setIsGsapLoaded(true); // Set state to true once GSAP is confirmed loaded
             console.log('GSAP and plugins loaded and registered.');
           } else {
             console.warn('GSAP or its plugins are not available after loading scripts.');
@@ -453,18 +479,17 @@ const App = () => {
         <div className="container mx-auto px-6 md:px-12 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Gallery of Innovation</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {aiFashionImages.map((imageUrl, index) => (
+            {aiFashionCollections.map((collection, index) => (
               <div key={index} className="bg-gray-800 p-8 rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
                 <img
-                  src={imageUrl}
-                  alt={`AI Fashion Design ${index + 1}`}
+                  src={collection.imageUrl}
+                  alt={collection.title}
                   className="w-full h-80 object-cover rounded-lg"
                   onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x500/2C3E50/FFFFFF?text=Image+Unavailable'; }}
                 />
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Collection {index + 1}</h3>
-                  {/* Static description instead of generated one */}
-                  <p className="text-gray-300 text-sm">A unique blend of algorithms and artistic vision.</p>
+                  <h3 className="text-xl font-semibold mb-2">{collection.title}</h3>
+                  <p className="text-gray-300 text-sm">{collection.description}</p>
                 </div>
               </div>
             ))}
@@ -550,10 +575,13 @@ const App = () => {
                 </svg>
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-200 flex items-center justify-center">
-                {/* Instagram SVG Icon (proper) */}
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fillRule="evenodd" d="M12 0C8.74 0 8.333.014 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.715-2.118 1.374L.63 4.14c-.297.765-.499 1.635-.558 2.913-.058 1.28-.072 1.67-.072 4.999s.014 3.72.072 4.999c.06 1.278.261 2.148.558 2.913.306.789.715 1.459 1.374 2.118l1.374 1.374c.765.297 1.635.499 2.913.558 1.28.058 1.67.072 4.999.072s3.72-.014 4.999-.072c1.278-.06 2.148-.261 2.913-.558.789-.306 1.459-.715 2.118-1.374l1.374-1.374c.297-.765.499-1.635.558-2.913.058-1.28.072-1.67.072-4.999s-.014-3.72-.072-4.999c-.06-1.278-.261-2.148-.558-2.913-.306-.789-.715-1.459-1.374-2.118L19.86 2.63c-.765-.297-1.635-.499-2.913-.558C15.607.014 15.217 0 12 0Zm0 2.163c3.204 0 3.584.012 4.85.071 1.17.055 1.8.249 2.222.418.572.22.957.472 1.374.889.417.418.67.803.889 1.374.169.422.363 1.052.418 2.222.059 1.266.071 1.646.071 4.85s-.012 3.584-.071 4.85c-.055 1.17-.249 1.8-.418 2.222-.22.572-.472.957-.889 1.374-.418.417-.803.67-1.374.889-.422.169-1.052-.363-2.222-.418-1.266.059-1.646.071-4.85.071s-3.584-.012-4.85-.071c-1.17-.055-1.8-.249-2.222-.418-.572-.22-.957-.472-1.374-.889-.417-.418-.67-.803-.889-1.374-.169-.422-.363-1.052-.418-2.222-.059-1.266-.071-1.646-.071-4.85s.012-3.584.071-4.85c.055-1.17.249-1.8.418-2.222.22-.572.472-.957.889-1.374.418-.417.803-.67 1.374-.889.422-.169 1.052-.363 2.222-.418C8.74 2.163 9.13 2.163 12 2.163Zm0 3.635a6.202 6.202 0 1 0 0 12.404 6.202 6.202 0 0 0 0-12.404ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.825-10.422a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" clipRule="evenodd" />
-                </svg>
+                {/* Placeholder image for Instagram icon */}
+                <img
+                  src="https://placehold.co/24x24/FFD700/FFFFFF?text=IG" // Using a placeholder that looks like the Instagram logo
+                  alt="Instagram Icon"
+                  className="w-6 h-6 rounded-md" // Apply rounded corners and size
+                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/24x24/E0F2F7/000000?text=IG'; }}
+                />
               </a>
             </div>
           </div>
