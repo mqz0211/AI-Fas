@@ -1,122 +1,121 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const App = () => {
-  // Refs for GSAP animations
+  // Refs for GSAP animations to target specific DOM elements
   const headerRef = useRef(null);
   const heroTextRef = useRef(null);
   const heroImageRef = useRef(null);
   const sectionRefs = useRef([]);
-  // Clear and re-initialize sectionRefs.current to avoid stale references on re-renders
+  // Ensures sectionRefs.current is cleared and re-initialized on each render
+  // This is important for ensuring the refs are correctly managed with map operations.
   sectionRefs.current = [];
 
-  // Ref specifically for the process steps container
+  // Ref specifically for the process steps container for its animation
   const processStepsContainerRef = useRef(null);
 
-  // State for AI Styling Advisor
-  const [stylingInput, setStylingInput] = useState('');
-  const [stylingAdvice, setStylingAdvice] = useState('');
-  const [isStylingLoading, setIsStylingLoading] = useState(false);
+  // State variables for the AI Styling Advisor feature
+  const [stylingInput, setStylingInput] = useState(''); // Stores user's input for styling advice
+  const [stylingAdvice, setStylingAdvice] = useState(''); // Stores the AI's generated styling advice
+  const [isStylingLoading, setIsStylingLoading] = useState(false); // Manages loading state for AI advice
 
-  // Pre-generated AI fashion image URLs and their specific descriptions
-  const aiFashionCollections = [
-    {
-      // Updated image URL for Collection 1 to resemble the "ice queen ball gown"
-      imageUrl: "https://placehold.co/400x500/ADD8E6/FFFFFF?text=Ice+Queen+Gown", // A light blue/iridescent placeholder
-      title: "Collection 1: Futuristic Gown",
-      description: "A breathtaking futuristic gown, crafted from iridescent, bio-luminescent fabric that shimmers with every movement. It evokes an ethereal, otherworldly elegance, perfect for a grand celestial event."
-    },
-    {
-      imageUrl: "https://placehold.co/400x500/98FB98/FFFFFF?text=Streetwear",
-      title: "Collection 2: Streetwear",
-      description: "A minimalist urban streetwear ensemble, featuring oversized silhouettes, utilitarian pockets, and a muted color palette of charcoal and concrete. It embodies effortless cool and practical sophistication for the modern city dweller."
-    },
-    {
-      imageUrl: "https://placehold.co/400x500/FFDAB9/FFFFFF?text=Bohemian+Dress",
-      title: "Collection 3: Bohemian Dress",
-      description: "A flowing, bohemian-inspired dress adorned with intricate floral patterns and delicate lace inserts. Made from sustainable, breathable linen, it captures a free-spirited, romantic vibe ideal for sun-drenched festivals or garden parties."
-    },
-    {
-      imageUrl: "https://placehold.co/400x500/DDA0DD/FFFFFF?text=Avant-Garde+Suit",
-      title: "Collection 4: Avant-Garde Suit",
-      description: "An avant-garde suit that challenges traditional tailoring with sharp, geometric cutouts and unexpected layering. Constructed from a structured, matte black material, it creates a bold, architectural statement for high-fashion events."
-    },
-    {
-      imageUrl: "https://placehold.co/400x500/ADD8E6/FFFFFF?text=Evening+Wear",
-      title: "Collection 5: Evening Wear",
-      description: "An elegant evening wear piece, featuring a cascading silhouette of flowing silk chiffon in a deep sapphire hue. Its graceful drape and subtle shimmer evoke timeless glamour and refined luxury."
-    },
-    {
-      imageUrl: "https://placehold.co/400x500/F08080/FFFFFF?text=Athleisure+Outfit",
-      title: "Collection 6: Athleisure Outfit",
-      description: "A dynamic athleisure outfit designed for both performance and style, incorporating breathable mesh panels and reflective accents. Its vibrant color blocking and ergonomic design convey energy and modern versatility."
-    }
+  // Array of placeholder image URLs for the fashion collections gallery
+  // These are visually representative placeholders for different fashion styles.
+  const aiFashionImages = [
+    "https://placehold.co/400x500/87CEEB/FFFFFF?text=Futuristic+Gown", // A futuristic iridescent gown, digital art style
+    "https://placehold.co/400x500/98FB98/FFFFFF?text=Streetwear", // Minimalist urban streetwear, muted tones
+    "https://placehold.co/400x500/FFDAB9/FFFFFF?text=Bohemian+Dress", // Bohemian-inspired dress with floral patterns
+    "https://placehold.co/400x500/DDA0DD/FFFFFF?text=Avant-Garde+Suit", // Avant-garde suit with geometric cutouts
+    "https://placehold.co/400x500/ADD8E6/FFFFFF?text=Evening+Wear", // Elegant evening wear with flowing silk
+    "https://placehold.co/400x500/F08080/FFFFFF?text=Athleisure+Outfit" // Sporty athleisure outfit with dynamic lines
   ];
 
-  // State for mobile menu
+  // State to control the visibility of the mobile navigation menu
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // State to track if GSAP and its plugins are loaded
+  // State to track if GSAP and its ScrollTrigger/ScrollToPlugin are successfully loaded
   const [isGsapLoaded, setIsGsapLoaded] = useState(false);
 
-  // Function to add elements to the sectionRefs array (for general section animations)
+  // Helper function to add DOM elements to the sectionRefs array
+  // This ensures that all sections meant for scroll animation are tracked.
   const addToRefs = (el) => {
     if (el && !sectionRefs.current.includes(el)) {
       sectionRefs.current.push(el);
     }
   };
 
-  // Function to handle smooth scrolling
+  // Function for smooth scrolling to a target ID on the page
   const handleSmoothScroll = (event, targetId) => {
-    event.preventDefault(); // Prevent default anchor link behavior
+    event.preventDefault(); // Prevents default anchor link behavior (instant jump)
     const targetElement = document.getElementById(targetId);
-    // Use window.gsap and window.ScrollToPlugin as they are loaded globally
-    if (isGsapLoaded && window.gsap && window.ScrollToPlugin) {
+    if (targetElement && isGsapLoaded && window.gsap && window.ScrollToPlugin) {
+      // Use GSAP's ScrollToPlugin for animated scrolling
       window.gsap.to(window, {
-        duration: 1, // Scroll duration in seconds
+        duration: 1, // Duration of the scroll animation
         scrollTo: {
           y: targetElement, // Target element to scroll to
-          offsetY: 80 // Offset to account for fixed header height
+          offsetY: 80 // Offset from the top to account for the fixed header
         },
-        ease: 'power2.inOut' // Easing function for smooth animation
+        ease: 'power2.inOut' // Easing function for a smooth effect
       });
-      // Close mobile menu after clicking a link
-      setIsMobileMenuOpen(false);
+      setIsMobileMenuOpen(false); // Close mobile menu after navigation
     } else {
-      console.error('GSAP or ScrollToPlugin not loaded yet for smooth scroll. Please check CDN loading.');
+      console.error('GSAP or ScrollToPlugin not loaded or target element not found for smooth scroll.');
     }
   };
 
-  // Function to get styling advice using Gemini API
+  // Function to fetch styling advice from the Gemini API
   const getStylingAdvice = async () => {
-    if (!stylingInput.trim()) {
+    if (!stylingInput.trim()) { // Check if the input field is empty
       setStylingAdvice('Please enter your styling query.');
       return;
     }
 
-    setIsStylingLoading(true);
-    setStylingAdvice(''); // Clear previous advice
+    setIsStylingLoading(true); // Set loading state to true
+    setStylingAdvice(''); // Clear any previous advice
 
+    // Construct the prompt for the AI model
     const prompt = `As an AI fashion stylist, provide creative and practical styling advice for the following scenario: "${stylingInput}". Suggest an outfit, color palette, and overall vibe. Keep the response under 150 words.`;
 
     let chatHistory = [];
     chatHistory.push({ role: "user", parts: [{ text: prompt }] });
     const payload = { contents: chatHistory };
-    const apiKey = ""; // Canvas will automatically provide the API key at runtime.
+
+    // *** CORRECTED: Accessing API key from process.env for local development ***
+    // This is the correct way to access environment variables defined in .env files
+    // when using Create React App (or similar build tools).
+    const apiKey = process.env.REACT_APP_GEMINI_API_KEY; 
+    
+    // Log the API key (or its presence) to the console for debugging.
+    // In your browser's developer console (F12), you should see "Attempting to use API Key: Loaded"
+    // if the key is picked up, or "Attempting to use API Key: NOT Loaded" otherwise.
+    console.log("Attempting to use API Key:", apiKey ? "Loaded" : "NOT Loaded");
+    
+    // Basic check for API key presence
+    if (!apiKey) {
+      console.error("Gemini API key is not set. Please ensure REACT_APP_GEMINI_API_KEY is defined in your .env file in the project root.");
+      setStylingAdvice("API key is missing. Please ensure it's in your .env file and restart the development server.");
+      setIsStylingLoading(false);
+      return;
+    }
+
+    // Gemini API endpoint for text generation
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
     try {
+      // Make the API call
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      const result = await response.json();
+      const result = await response.json(); // Parse the JSON response
 
+      // Check for a valid response structure and extract the generated text
       if (result.candidates && result.candidates.length > 0 &&
           result.candidates[0].content && result.candidates[0].content.parts &&
           result.candidates[0].content.parts.length > 0) {
         const text = result.candidates[0].content.parts[0].text;
-        setStylingAdvice(text);
+        setStylingAdvice(text); // Update state with the AI's advice
       } else {
         setStylingAdvice('Failed to get styling advice. Please try again.');
         console.error('Unexpected API response structure for styling advice:', result);
@@ -125,7 +124,7 @@ const App = () => {
       setStylingAdvice('Error getting styling advice. Check console for details.');
       console.error('Error calling Gemini API for styling advice:', error);
     } finally {
-      setIsStylingLoading(false);
+      setIsStylingLoading(false); // Reset loading state
     }
   };
 
@@ -133,28 +132,29 @@ const App = () => {
   // useEffect hook for dynamically loading GSAP and its plugins
   useEffect(() => {
     const loadScript = (src, id, callback) => {
+      // Check if the script is already loaded to prevent duplicate loading
       if (document.getElementById(id)) {
-        callback();
+        callback(); // If loaded, just run the callback
         return;
       }
       const script = document.createElement('script');
       script.src = src;
       script.id = id;
-      script.onload = callback;
-      script.onerror = () => console.error(`Failed to load script: ${src}`);
-      document.head.appendChild(script);
+      script.onload = callback; // Callback when script loads successfully
+      script.onerror = () => console.error(`Failed to load script: ${src}`); // Error handling for script loading
+      document.head.appendChild(script); // Add script to the document head
     };
 
-    // Load GSAP core
+    // Load GSAP core library
     loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js', 'gsap-core', () => {
-      // Load ScrollTrigger after GSAP core
+      // Load ScrollTrigger plugin after GSAP core is loaded
       loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js', 'gsap-scrolltrigger', () => {
-        // Load ScrollToPlugin after ScrollTrigger
+        // Load ScrollToPlugin after ScrollTrigger is loaded
         loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollToPlugin.min.js', 'gsap-scrolltoplugin', () => {
-          // All GSAP scripts are loaded, now register plugins
+          // Once all GSAP scripts are loaded, register the plugins
           if (window.gsap && window.ScrollTrigger && window.ScrollToPlugin) {
             window.gsap.registerPlugin(window.ScrollTrigger, window.ScrollToPlugin);
-            setIsGsapLoaded(true); // Set state to true once GSAP is confirmed loaded
+            setIsGsapLoaded(true); // Update state to confirm GSAP is ready
             console.log('GSAP and plugins loaded and registered.');
           } else {
             console.warn('GSAP or its plugins are not available after loading scripts.');
@@ -163,13 +163,14 @@ const App = () => {
       });
     });
 
-    // Cleanup function: remove scripts and kill ScrollTrigger instances
+    // Cleanup function: This runs when the component unmounts
     return () => {
       console.log('Cleaning up GSAP scripts and ScrollTriggers.');
       if (window.ScrollTrigger) {
+        // Kill all active ScrollTrigger instances to prevent memory leaks
         window.ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       }
-      // Remove dynamically added scripts
+      // Remove dynamically added script tags from the DOM
       ['gsap-core', 'gsap-scrolltrigger', 'gsap-scrolltoplugin'].forEach(id => {
         const script = document.getElementById(id);
         if (script) {
@@ -177,106 +178,103 @@ const App = () => {
         }
       });
     };
-  }, []); // Empty dependency array means this effect runs once after initial render
+  }, []); // Empty dependency array ensures this effect runs only once after initial render
 
 
-  // useEffect hook for GSAP animations, dependent on isGsapLoaded
+  // useEffect hook for defining GSAP animations, dependent on isGsapLoaded
   useEffect(() => {
+    // Only proceed with animation setup if GSAP has been successfully loaded
     if (!isGsapLoaded) {
       console.log('GSAP not yet loaded, skipping animation setup.');
       return;
     }
 
     console.log('GSAP is loaded, setting up animations.');
-    console.log('gsap:', window.gsap); // Use window.gsap
-    console.log('ScrollTrigger:', window.ScrollTrigger); // Use window.ScrollTrigger
-    console.log('processStepsContainerRef.current (before animation setup):', processStepsContainerRef.current);
+    // Confirm GSAP and its plugins are available on the window object
+    console.log('gsap:', window.gsap);
+    console.log('ScrollTrigger:', window.ScrollTrigger);
 
-    // GSAP Animations
-    // Header fade-in
+    // GSAP Animations definitions:
+
+    // 1. Header fade-in animation on component mount
     if (headerRef.current) {
       window.gsap.fromTo(headerRef.current,
-        { opacity: 0, y: -50 },
-        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+        { opacity: 0, y: -50 }, // Starting state: invisible and slightly above
+        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' } // Ending state: visible and in place
       );
     }
 
-    // Hero text animation (remains as a load-in animation)
+    // 2. Hero section text animation (staggered fade-in from bottom)
     if (heroTextRef.current) {
-      window.gsap.fromTo(heroTextRef.current.children,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1.2, stagger: 0.2, ease: 'power3.out', delay: 0.5 }
+      window.gsap.fromTo(heroTextRef.current.children, // Targets direct children of the hero text container
+        { opacity: 0, y: 50 }, // Starting state: invisible and below
+        { opacity: 1, y: 0, duration: 1.2, stagger: 0.2, ease: 'power3.out', delay: 0.5 } // Staggered fade-in
       );
     }
 
-    // Hero Image Scroll-Triggered Animation
+    // 3. Hero Image Scroll-Triggered Animation (subtle parallax/scale effect)
     if (heroImageRef.current) {
       window.gsap.fromTo(heroImageRef.current,
         {
-          scale: 1.3, // Start larger
-          y: '10%', // Start slightly lower to create a subtle movement effect
-          opacity: 0.8 // Start slightly opaque
+          scale: 1.3, // Start slightly larger
+          y: '10%', // Start slightly lower (creates a subtle upward motion on scroll)
+          opacity: 0.8 // Start slightly transparent
         },
         {
           scale: 1, // End at normal size
-          y: '0%', // End at original position
+          y: '0%', // End at original Y position
           opacity: 1, // End fully opaque
-          ease: 'none', // Linear ease for scrubbed animation
+          ease: 'none', // Linear ease for scrubbed animation (direct relation to scroll)
           scrollTrigger: {
-            trigger: ".hero-section", // The section containing the image
-            start: "top top", // Start when the top of the hero section hits the top of the viewport
-            end: "bottom center", // End when the bottom of the hero section hits the center of the viewport
-            scrub: true, // Link animation directly to scroll progress
-            // markers: true, // Uncomment for debugging if needed
+            trigger: ".hero-section", // The element that triggers the animation
+            start: "top top", // Animation starts when the top of the trigger hits the top of the viewport
+            end: "bottom center", // Animation ends when the bottom of the trigger hits the center of the viewport
+            scrub: true, // Links animation progress directly to scroll position (0 to 1)
           }
         }
       );
     }
 
-    // Section scroll animations (for other sections, excluding the process steps which have their own animation)
+    // 4. Section scroll animations for other content sections (fade-in from bottom)
     sectionRefs.current.forEach((section) => {
-      // Exclude the process section from this general animation if it's the one
+      // Ensure the section exists and isn't the 'process' section (which has its own animation)
       if (section && section.id !== 'process') {
-        window.gsap.fromTo(section.children,
-          { opacity: 0, y: 50 },
+        window.gsap.fromTo(section.children, // Targets direct children within the section
+          { opacity: 0, y: 50 }, // Starting state: invisible and below
           {
             opacity: 1,
             y: 0,
             duration: 1,
-            stagger: 0.1,
+            stagger: 0.1, // Stagger effect for children
             ease: 'power2.out',
             scrollTrigger: {
               trigger: section,
-              start: 'top 80%', // When the top of the section hits 80% of the viewport
-              end: 'bottom 20%',
-              toggleActions: 'play none none reverse', // play, pause, resume, reverse, restart, reset, complete, none
-              // markers: true, // For debugging scroll trigger
+              start: 'top 80%', // Animation starts when the top of the section hits 80% of viewport height
+              toggleActions: 'play none none reverse', // Play on scroll down, reverse on scroll up
             },
           }
         );
       }
     });
 
-    // New: Scroll-triggered animation for the process steps
+    // 5. Scroll-triggered animation for the process steps (staggered slide-in from left)
     if (processStepsContainerRef.current) {
       console.log('Attempting to animate process steps.');
-      // Select all direct children of the processStepsContainerRef
-      const processStepElements = Array.from(processStepsContainerRef.current.children); // Convert HTMLCollection to Array
+      // Convert HTMLCollection of children to an Array for Array.from compatibility
+      const processStepElements = Array.from(processStepsContainerRef.current.children);
 
       window.gsap.fromTo(processStepElements,
-        { opacity: 0, x: -50 }, // Start off-screen to the left and invisible
+        { opacity: 0, x: -50 }, // Starting state: invisible and off-screen to the left
         {
           opacity: 1,
           x: 0, // Slide to original position
-          duration: 0.8, // Animation duration for each item
-          stagger: 0.3, // Delay between each item's animation
+          duration: 0.8, // Duration for each step's animation
+          stagger: 0.3, // Delay between each step's animation (staggered effect)
           ease: 'power2.out',
           scrollTrigger: {
             trigger: processStepsContainerRef.current,
-            start: 'top 75%', // When the top of the container hits 75% of the viewport
-            // end: 'bottom 25%', // Optional: define an end point for the trigger
+            start: 'top 75%', // Animation starts when the top of the container hits 75% of viewport height
             toggleActions: 'play none none reverse', // Play on scroll down, reverse on scroll up
-            // Removed markers: true
           },
         }
       );
@@ -284,20 +282,21 @@ const App = () => {
       console.warn('processStepsContainerRef.current is null, cannot animate process steps.');
     }
 
-    // No cleanup for this useEffect, as cleanup is handled by the loading useEffect
-  }, [isGsapLoaded]); // This effect runs when isGsapLoaded changes to true
+    // No cleanup for this useEffect; cleanup for GSAP instances is handled by the loading useEffect
+  }, [isGsapLoaded]); // This effect runs only when isGsapLoaded state changes to true
 
 
   return (
     <div className="bg-black text-white antialiased min-h-screen">
-      {/* Global style for San Francisco font */}
+      {/* Global styles for font and preventing horizontal overflow */}
       <style>
         {`
         body {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-          overflow-x: hidden; /* Prevent horizontal scroll for animations */
+          overflow-x: hidden; /* Prevents horizontal scrolling, common with animations */
         }
 
+        /* Keyframe animation for a subtle fade-in effect */
         @keyframes fade-in {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -309,18 +308,18 @@ const App = () => {
         `}
       </style>
 
-      {/* Header */}
+      {/* Header section - Fixed position at the top */}
       <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 bg-gray-900 bg-opacity-90 backdrop-blur-sm shadow-sm py-4 px-6 md:px-12 flex justify-between items-center rounded-b-xl">
-        {/* New logo: a large circle with a small circle in the middle */}
+        {/* Company Logo (SVG based) */}
         <div className="flex items-center">
           <svg className="w-10 h-10 text-blue-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            {/* Outer circle */}
+            {/* Outer circle of the logo */}
             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/>
-            {/* Inner circle */}
+            {/* Inner circle of the logo */}
             <circle cx="12" cy="12" r="3" fill="currentColor"/>
           </svg>
         </div>
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation Menu */}
         <nav className="hidden md:flex space-x-8">
           <a href="#vision" onClick={(e) => handleSmoothScroll(e, 'vision')} className="text-gray-300 hover:text-white transition-colors duration-200">Our Vision</a>
           <a href="#process" onClick={(e) => handleSmoothScroll(e, 'process')} className="text-gray-300 hover:text-white transition-colors duration-200">The Process</a>
@@ -328,20 +327,20 @@ const App = () => {
           <a href="#ai-advisor" onClick={(e) => handleSmoothScroll(e, 'ai-advisor')} className="text-gray-300 hover:text-white transition-colors duration-200">AI Advisor</a>
           <a href="#contact" onClick={(e) => handleSmoothScroll(e, 'contact')} className="text-gray-300 hover:text-white transition-colors duration-200">Contact</a>
         </nav>
-        {/* Mobile Hamburger Button */}
+        {/* Mobile Hamburger Button (visible only on small screens) */}
         <button
           className="md:hidden p-2 rounded-md hover:bg-gray-700 transition-colors duration-200"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle mobile menu"
         >
-          {/* Hamburger Icon */}
+          {/* Hamburger Icon (SVG) */}
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
           </svg>
         </button>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay (conditionally rendered) */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-95 z-50 flex flex-col items-center justify-center md:hidden animate-fade-in">
           <button
@@ -349,7 +348,7 @@ const App = () => {
             onClick={() => setIsMobileMenuOpen(false)}
             aria-label="Close mobile menu"
           >
-            {/* Close Icon (X) */}
+            {/* Close Icon (X) SVG */}
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
@@ -479,17 +478,18 @@ const App = () => {
         <div className="container mx-auto px-6 md:px-12 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight">Gallery of Innovation</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {aiFashionCollections.map((collection, index) => (
+            {aiFashionImages.map((imageUrl, index) => (
               <div key={index} className="bg-gray-800 p-8 rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
                 <img
-                  src={collection.imageUrl}
-                  alt={collection.title}
+                  src={imageUrl}
+                  alt={`AI Fashion Design ${index + 1}`}
                   className="w-full h-80 object-cover rounded-lg"
                   onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x500/2C3E50/FFFFFF?text=Image+Unavailable'; }}
                 />
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{collection.title}</h3>
-                  <p className="text-gray-300 text-sm">{collection.description}</p>
+                  <h3 className="text-xl font-semibold mb-2">Collection {index + 1}</h3>
+                  {/* Static description instead of generated one */}
+                  <p className="text-gray-300 text-sm">A unique blend of algorithms and artistic vision.</p>
                 </div>
               </div>
             ))}
@@ -575,13 +575,10 @@ const App = () => {
                 </svg>
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-200 flex items-center justify-center">
-                {/* Placeholder image for Instagram icon */}
-                <img
-                  src="https://placehold.co/24x24/FFD700/FFFFFF?text=IG" // Using a placeholder that looks like the Instagram logo
-                  alt="Instagram Icon"
-                  className="w-6 h-6 rounded-md" // Apply rounded corners and size
-                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/24x24/E0F2F7/000000?text=IG'; }}
-                />
+                {/* Instagram SVG Icon (proper) */}
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fillRule="evenodd" d="M12 0C8.74 0 8.333.014 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.715-2.118 1.374L.63 4.14c-.297.765-.499 1.635-.558 2.913-.058 1.28-.072 1.67-.072 4.999s.014 3.72.072 4.999c.06 1.278.261 2.148.558 2.913.306.789.715 1.459 1.374 2.118l1.374 1.374c.765.297 1.635.499 2.913.558 1.28.058 1.67.072 4.999.072s3.72-.014 4.999-.072c1.278-.06 2.148-.261 2.913-.558.789-.306 1.459-.715 2.118-1.374l1.374-1.374c.297-.765.499-1.635.558-2.913.058-1.28.072-1.67.072-4.999s-.014-3.72-.072-4.999c-.06-1.278-.261-2.148-.558-2.913-.306-.789-.715-1.459-1.374-2.118L19.86 2.63c-.765-.297-1.635-.499-2.913-.558C15.607.014 15.217 0 12 0Zm0 2.163c3.204 0 3.584.012 4.85.071 1.17.055 1.8.249 2.222.418.572.22.957.472 1.374.889.417.418.67.803.889 1.374.169.422.363 1.052.418 2.222.059 1.266.071 1.646.071 4.85s-.012 3.584-.071 4.85c-.055 1.17-.249 1.8-.418 2.222-.22.572-.472.957-.889-1.374-.418-.417-.803-.67-1.374-.889-.422-.169-1.052-.363-2.222-.418-1.266.059-1.646.071-4.85.071s-3.584-.012-4.85-.071c-1.17-.055-1.8-.249-2.222-.418-.572-.22-.957-.472-1.374-.889-.417-.418-.803-.67-1.374-.889-.422-.169-1.052-.363-2.222-.418C8.74 2.163 9.13 2.163 12 2.163Zm0 3.635a6.202 6.202 0 1 0 0 12.404 6.202 6.202 0 0 0 0-12.404ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.825-10.422a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" clipRule="evenodd" />
+                </svg>
               </a>
             </div>
           </div>
