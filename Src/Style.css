@@ -1,6 +1,6 @@
 /* Custom global styles */
 body {
-  overflow-x: hidden; /* Prevent horizontal scroll for animations */
+  overflow-x: hidden; /* Prevents horizontal scroll for animations */
 }
 
 /* Optional: Define fade-in animation if not in tailwind.config.js */
