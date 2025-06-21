@@ -372,7 +372,7 @@ const App = () => {
           </div>
           <div ref={heroImageRef} className="md:w-1/2 flex justify-center">
             <img
-              src="https://placehold.co/600x400/2C3E50/FFFFFF?text=AI+Fashion+Design"
+              src="https://raw.githubusercontent.com/mqz0211/AI-Fas/main/Src/pics/Leonardo_Kino_XL_Abstract_fusion_of_flowing_highfashion_silk_t_1.jpg"
               alt="AI Generated Fashion Design"
               className="rounded-3xl shadow-2xl w-full max-w-md md:max-w-lg object-cover transform hover:scale-105 transition-transform duration-500"
               onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x400/2C3E50/FFFFFF?text=Image+Unavailable'; }}
@@ -419,34 +419,34 @@ const App = () => {
         </div>
       </section>
 
-      {/* The Process Section */}
+    
       <section id="process" ref={addToRefs} className="py-20 md:py-32 bg-black">
         <div className="container mx-auto px-6 md:px-12">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 tracking-tight">The Process</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div ref={processStepsContainerRef} className="space-y-10">
-              <div className="flex items-start opacity-0"> {/* Re-added opacity-0 */}
+              <div className="flex items-start opacity-0"> 
                 <div className="flex-shrink-0 w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center text-xl font-bold mr-6 shadow-md">1</div>
                 <div>
                   <h3 className="text-2xl font-semibold mb-2">Concept Generation</h3>
                   <p className="text-gray-300">AI analyzes trends, inspirations, and user inputs to generate novel design concepts.</p>
                 </div>
               </div>
-              <div className="flex items-start opacity-0"> {/* Re-added opacity-0 */}
+              <div className="flex items-start opacity-0">
                 <div className="flex-shrink-0 w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center text-xl font-bold mr-6 shadow-md">2</div>
                 <div>
                   <h3 className="text-2xl font-semibold mb-2">Design Refinement</h3>
                   <p className="text-300">Designers collaborate with AI, refining details and exploring variations with unparalleled speed.</p>
                 </div>
               </div>
-              <div className="flex items-start opacity-0"> {/* Re-added opacity-0 */}
+              <div className="flex items-start opacity-0"> 
                 <div className="flex-shrink-0 w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center text-xl font-bold mr-6 shadow-md">3</div>
                 <div>
                   <h3 className="text-2xl font-semibold mb-2">Virtual Prototyping</h3>
                   <p className="text-gray-300">Realistic 3D simulations allow for virtual try-ons and adjustments before physical production.</p>
                 </div>
               </div>
-              <div className="flex items-start opacity-0"> {/* Re-added opacity-0 */}
+              <div className="flex items-start opacity-0"> 
                 <div className="flex-shrink-0 w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center text-xl font-bold mr-6 shadow-md">4</div>
                 <div>
                   <h3 className="text-2xl font-semibold mb-2">Ethical Production</h3>
