@@ -1,3 +1,5 @@
+# AI Fashion
+
 **AI Fashion Reimagined: An AI-Powered Styling Advisor & Concept Gallery**
 Project Description
 This project showcases a modern web application leveraging Artificial Intelligence to transform the fashion industry. It features an interactive platform where users can explore AI-generated fashion concepts and receive personalized styling advice powered by a large language model. The website emphasizes a seamless user experience with smooth animations and a responsive design across various devices.
@@ -35,7 +37,8 @@ Follow these steps to get the project up and running on your local machine.
 First, clone the project from your GitHub repository:
 
 git clone YOUR_REPOSITORY_URL_HERE
-cd Ai-Fas # Navigate into your project directory
+cd Ai-Fas
+# Navigate into your project directory
 
 (Replace YOUR_REPOSITORY_URL_HERE with the HTTPS or SSH URL of your GitHub repository)
 
