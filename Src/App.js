@@ -7,7 +7,6 @@ const App = () => {
   const heroImageRef = useRef(null);
   const sectionRefs = useRef([]);
   // Ensures sectionRefs.current is cleared and re-initialized on each render
-  // This is important for ensuring the refs are correctly managed with map operations.
   sectionRefs.current = [];
 
   // Ref specifically for the process steps container for its animation
@@ -80,20 +79,14 @@ const App = () => {
     chatHistory.push({ role: "user", parts: [{ text: prompt }] });
     const payload = { contents: chatHistory };
 
-    // *** CORRECTED: Accessing API key from process.env for local development ***
-    // This is the correct way to access environment variables defined in .env files
-    // when using Create React App (or similar build tools).
-    const apiKey = process.env.REACT_APP_GEMINI_API_KEY; 
-    
-    // Log the API key (or its presence) to the console for debugging.
-    // In your browser's developer console (F12), you should see "Attempting to use API Key: Loaded"
-    // if the key is picked up, or "Attempting to use API Key: NOT Loaded" otherwise.
-    console.log("Attempting to use API Key:", apiKey ? "Loaded" : "NOT Loaded");
-    
-    // Basic check for API key presence
-    if (!apiKey) {
-      console.error("Gemini API key is not set. Please ensure REACT_APP_GEMINI_API_KEY is defined in your .env file in the project root.");
-      setStylingAdvice("API key is missing. Please ensure it's in your .env file and restart the development server.");
+  
+    const apiKey = "AIzaSyDsdgUPeTM9Qkzg9QKZt_KPpelz4TW0iCM"; // 
+
+
+    // Check if API key is present
+    if (!apiKey || apiKey === "YOUR_GEMINI_API_KEY_HERE") {
+      console.error("Gemini API key is not set. Please replace 'YOUR_GEMINI_API_KEY_HERE' with your actual API key .");
+      setStylingAdvice("API key is missing. Please configure it for grading purposes.");
       setIsStylingLoading(false);
       return;
     }
@@ -443,7 +436,7 @@ const App = () => {
                 <div className="flex-shrink-0 w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center text-xl font-bold mr-6 shadow-md">2</div>
                 <div>
                   <h3 className="text-2xl font-semibold mb-2">Design Refinement</h3>
-                  <p className="text-gray-300">Designers collaborate with AI, refining details and exploring variations with unparalleled speed.</p>
+                  <p className="text-300">Designers collaborate with AI, refining details and exploring variations with unparalleled speed.</p>
                 </div>
               </div>
               <div className="flex items-start opacity-0"> {/* Re-added opacity-0 */}
@@ -577,7 +570,7 @@ const App = () => {
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-200 flex items-center justify-center">
                 {/* Instagram SVG Icon (proper) */}
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fillRule="evenodd" d="M12 0C8.74 0 8.333.014 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.715-2.118 1.374L.63 4.14c-.297.765-.499 1.635-.558 2.913-.058 1.28-.072 1.67-.072 4.999s.014 3.72.072 4.999c.06 1.278.261 2.148.558 2.913.306.789.715 1.459 1.374 2.118l1.374 1.374c.765.297 1.635.499 2.913.558 1.28.058 1.67.072 4.999.072s3.72-.014 4.999-.072c1.278-.06 2.148-.261 2.913-.558.789-.306 1.459-.715 2.118-1.374l1.374-1.374c.297-.765.499-1.635.558-2.913.058-1.28.072-1.67.072-4.999s-.014-3.72-.072-4.999c-.06-1.278-.261-2.148-.558-2.913-.306-.789-.715-1.459-1.374-2.118L19.86 2.63c-.765-.297-1.635-.499-2.913-.558C15.607.014 15.217 0 12 0Zm0 2.163c3.204 0 3.584.012 4.85.071 1.17.055 1.8.249 2.222.418.572.22.957.472 1.374.889.417.418.67.803.889 1.374.169.422.363 1.052.418 2.222.059 1.266.071 1.646.071 4.85s-.012 3.584-.071 4.85c-.055 1.17-.249 1.8-.418 2.222-.22.572-.472.957-.889-1.374-.418-.417-.803-.67-1.374-.889-.422-.169-1.052-.363-2.222-.418-1.266.059-1.646.071-4.85.071s-3.584-.012-4.85-.071c-1.17-.055-1.8-.249-2.222-.418-.572-.22-.957-.472-1.374-.889-.417-.418-.803-.67-1.374-.889-.422-.169-1.052-.363-2.222-.418C8.74 2.163 9.13 2.163 12 2.163Zm0 3.635a6.202 6.202 0 1 0 0 12.404 6.202 6.202 0 0 0 0-12.404ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.825-10.422a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" clipRule="evenodd" />
+                  <path fillRule="evenodd" d="M12 0C8.74 0 8.333.014 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.715-2.118 1.374L.63 4.14c-.297.765-.499 1.635-.558 2.913-.058 1.28-.072 1.67-.072 4.999s.014 3.72.072 4.999c.06 1.278.261 2.148.558 2.913.306.789.715 1.459 1.374 2.118l1.374 1.374c.765.297 1.635.499 2.913.558 1.28.058 1.67.072 4.999.072s3.72-.014 4.999-.072c1.278-.06 2.148-.261 2.913-.558.789-.306 1.459-.715 2.118-1.374l1.374-1.374c.297-.765.499-1.635.558-2.913.058-1.28.072-1.67.072-4.999s-.014-3.72-.072-4.999c-.06-1.278-.261-2.148-.558-2.913-.306-.789-.715-1.459-1.374-2.118L19.86 2.63c-.765-.297-1.635-.499-2.913-.558C15.607.014 15.217 0 12 0Zm0 2.163c3.204 0 3.584.012 4.85.071 1.17.055 1.8.249 2.222.418.572.22.957.472 1.374.889.417.418.67.803.889 1.374.169.422.363 1.052.418 2.222.059 1.266.071 1.646.071 4.85s-.012 3.584-.071 4.85c-.055 1.17-.249 1.8-.418 2.222-.22.572-.472.957-.889 1.374-.418-.417-.803-.67-1.374-.889-.422-.169-1.052-.363-2.222-.418-1.266.059-1.646.071-4.85.071s-3.584-.012-4.85-.071c-1.17-.055-1.8-.249-2.222-.418-.572-.22-.957-.472-1.374-.889-.417-.418-.803-.67-1.374-.889-.422-.169-1.052-.363-2.222-.418C8.74 2.163 9.13 2.163 12 2.163Zm0 3.635a6.202 6.202 0 1 0 0 12.404 6.202 6.202 0 0 0 0-12.404ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.825-10.422a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" clipRule="evenodd" />
                 </svg>
               </a>
             </div>
