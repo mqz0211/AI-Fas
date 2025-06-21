@@ -456,7 +456,7 @@ const App = () => {
             </div>
             <div className="flex justify-center">
               <img
-                src="https://placehold.co/600x600/1C2833/FFFFFF?text=AI+Design+Process"
+                src="https://raw.githubusercontent.com/mqz0211/AI-Fas/main/Src/pics/AlbedoBase_XL_Hyperrealistic_abstract_digital_synthesis_countl_2.jpg"
                 alt="AI Design Process Flow"
                 className="rounded-3xl shadow-2xl w-full max-w-lg object-cover transform hover:scale-105 transition-transform duration-500"
                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x600/1C2833/FFFFFF?text=Image+Unavailable'; }}
