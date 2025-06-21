@@ -20,12 +20,12 @@ const App = () => {
   // Array of placeholder image URLs for the fashion collections gallery
   // These are visually representative placeholders for different fashion styles.
   const aiFashionImages = [
-    "https://placehold.co/400x500/87CEEB/FFFFFF?text=Futuristic+Gown", // A futuristic iridescent gown, digital art style
-    "https://placehold.co/400x500/98FB98/FFFFFF?text=Streetwear", // Minimalist urban streetwear, muted tones
-    "https://placehold.co/400x500/FFDAB9/FFFFFF?text=Bohemian+Dress", // Bohemian-inspired dress with floral patterns
-    "https://placehold.co/400x500/DDA0DD/FFFFFF?text=Avant-Garde+Suit", // Avant-garde suit with geometric cutouts
-    "https://placehold.co/400x500/ADD8E6/FFFFFF?text=Evening+Wear", // Elegant evening wear with flowing silk
-    "https://placehold.co/400x500/F08080/FFFFFF?text=Athleisure+Outfit" // Sporty athleisure outfit with dynamic lines
+    "https://raw.githubusercontent.com/mqz0211/AI-Fas/main/Src/pics/Leonardo_Kino_XL_A_stunning_futuristic_iridescent_gown_elegan_2.jpg", // A futuristic iridescent gown, digital art style
+    "https://raw.githubusercontent.com/mqz0211/AI-Fas/main/Src/pics/Leonardo_Kino_XL_A_minimalist_urban_streetwear_outfit_oversiz_2.jpg", // Minimalist urban streetwear, muted tones
+    "https://raw.githubusercontent.com/mqz0211/AI-Fas/main/Src/pics/Leonardo_Kino_XL_A_flowing_bohemianinspired_maxi_dress_with_in_2.jpg", // Bohemian-inspired dress with floral patterns
+    "https://raw.githubusercontent.com/mqz0211/AI-Fas/main/Src/pics/Leonardo_Kino_XL_An_avantgarde_suit_with_sharp_geometric_cutou_1.jpg", // Avant-garde suit with geometric cutouts
+    "https://raw.githubusercontent.com/mqz0211/AI-Fas/main/Src/pics/Leonardo_Kino_XL_An_elegant_evening_gown_made_of_flowing_deep_3.jpg", // Elegant evening wear with flowing silk
+    "https://raw.githubusercontent.com/mqz0211/AI-Fas/main/Src/pics/Leonardo_Kino_XL_A_cool_casual_portrait_of_a_boy_teenager_aro_0.jpg" // Sporty athleisure outfit with dynamic lines
   ];
 
   // State to control the visibility of the mobile navigation menu
