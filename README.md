@@ -19,7 +19,7 @@ Welcome to **AI Fashion Reimagined**, a modern web experience that blends creati
 
 ## 🛠 Technologies Used
 
-* **Frontend:** React.js,HTML,JSON,JS
+* **Frontend:** React.js, HTML, JSON, CSS
 * **Styling:** Tailwind CSS (utility-first responsive framework)
 * **Animations:** GSAP (GreenSock) with ScrollTrigger and ScrollToPlugin
 * **AI Integration:** Securely integrates a cloud-based AI model for text generation *(details abstracted for security)*
@@ -78,15 +78,19 @@ For a visual overview of the concept, development, and roadmap, check out the of
 
 ## 🙋‍♂️ Author & Contact
 
-**Qhaleesh**
+**Muhammad Qhaleesh Zhariif**
 
 [![GitHub Profile](https://img.shields.io/badge/GitHub-@mqz0211-181717?logo=github\&style=for-the-badge)](https://github.com/mqz0211)
 
-[![WhatsApp](https://img.shields.io/badge/Chat%20on-WhatsApp-25D366?logo=whatsapp\&style=for-the-badge)](https://wa.me/+601113047107)
+[![WhatsApp](https://img.shields.io/badge/Chat%20on-WhatsApp-25D366?logo=whatsapp\&style=for-the-badge)](https://wa.me/YOUR_PHONE_NUMBER)
+
+Feel free to explore more of my work or reach out for collaborations!
 
 ---
 
 ## 📄 License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
 This project is licensed under the **MIT License**.
 
