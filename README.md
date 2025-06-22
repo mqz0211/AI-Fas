@@ -82,9 +82,9 @@ For a visual overview of the concept, development, and roadmap, check out the of
 
 [![GitHub Profile](https://img.shields.io/badge/GitHub-@mqz0211-181717?logo=github\&style=for-the-badge)](https://github.com/mqz0211)
 
-[![WhatsApp](https://img.shields.io/badge/Chat%20on-WhatsApp-25D366?logo=whatsapp\&style=for-the-badge)](https://wa.me/YOUR_PHONE_NUMBER)
+[![WhatsApp](https://img.shields.io/badge/Chat%20on-WhatsApp-25D366?logo=whatsapp\&style=for-the-badge)](https://wa.me/+601113047107)
 
-Feel free to explore more of my work or reach out for collaborations!
+![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=mqz0211&show_icons=true&theme=transparent)
 
 ---
 
