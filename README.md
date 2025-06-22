@@ -19,7 +19,7 @@ Welcome to **AI Fashion Reimagined**, a modern web experience that blends creati
 
 ## 🛠 Technologies Used
 
-* **Frontend:** React.js,HTML,CSS,JSON,JS
+* **Frontend:** React.js,HTML,JSON,JS
 * **Styling:** Tailwind CSS (utility-first responsive framework)
 * **Animations:** GSAP (GreenSock) with ScrollTrigger and ScrollToPlugin
 * **AI Integration:** Securely integrates a cloud-based AI model for text generation *(details abstracted for security)*
