@@ -73,7 +73,7 @@ The app will be available at [http://localhost:3000](http://localhost:3000)
 
 For a visual overview of the concept, development, and roadmap, check out the official presentation:
 
-[![View Slides](https://img.shields.io/badge/View-Google%20Slides-orange?logo=google-slides\&style=for-the-badge)](https://docs.google.com/presentation/d/1Zxfgx-eH0hc3VDuKQEGiPuLPOjxgCm8MATXWXRdIdOk/edit?usp=sharing)
+[![View Slides](https://img.shields.io/badge/View-Google%20Slides-orange?logo=google-slides\&style=for-the-badge)][(https://docs.google.com/presentation/d/1Zxfgx-eH0hc3VDuKQEGiPuLPOjxgCm8MATXWXRdIdOk/edit?usp=sharing](https://docs.google.com/presentation/d/1s4O8LT4cjFbfnQ5S1c4bC-9VEi5c4D7C9TtuOcnn8Uo/edit?usp=sharing))
 
 ---
 
