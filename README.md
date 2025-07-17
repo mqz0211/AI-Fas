@@ -67,8 +67,6 @@ export NODE_OPTIONS=--openssl-legacy-provider && npm start
 
 The app will be available at [http://localhost:3000](http://localhost:3000)
 
----
-
 
 ---
 
