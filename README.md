@@ -69,22 +69,6 @@ The app will be available at [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 📊 Project Slides
-
-For a visual overview of the concept, development, and roadmap, check out the official presentation:
-
-[![View Google Slides](https://img.shields.io/badge/Google_Slides-View-blue?logo=google-slides&style=for-the-badge)](https://docs.google.com/presentation/d/1s4O8LT4cjFbfnQ5S1c4bC-9VEi5c4D7C9TtuOcnn8Uo/edit?usp=sharing)
-
-
----
-
-## 🙋‍♂️ Author & Contact
-
-**Muhammad Qhaleesh Zhariif**
-
-[![GitHub Profile](https://img.shields.io/badge/GitHub-@mqz0211-181717?logo=github\&style=for-the-badge)](https://github.com/mqz0211)
-
-![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=mqz0211&show_icons=true&theme=transparent)
 
 ---
 
